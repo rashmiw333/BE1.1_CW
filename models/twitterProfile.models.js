@@ -1,6 +1,6 @@
-const mongooes = require ("mongoose");
+const mongoose = require ("mongoose");
 
-const twitterProfileSchema = new mongooes.Schema({
+const twitterProfileSchema = new mongoose.Schema({
     profilePic: String,
     fullName: String,
     userName: String,
@@ -14,6 +14,6 @@ const twitterProfileSchema = new mongooes.Schema({
     isOnline: Boolean,
 });
 
-const TwitterProfile = new mongooes.model("TwitterProfile",twitterProfileSchema);
+const TwitterProfile =  mongoose.model("TwitterProfile",twitterProfileSchema);
 
 module.exports = TwitterProfile;

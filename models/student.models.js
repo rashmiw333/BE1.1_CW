@@ -1,6 +1,6 @@
-const mongooes = require ("mongooes");
+const mongoose = require ("mongoose");
 
-const studentSchema = new mongooes.schema({
+const studentSchema = new mongoose.schema({
     studentRegistrationNumber:String,
     studentId: String,
     studentName: String,

@@ -1,4 +1,4 @@
-const mongooes = require ("mongooes");
+const mongoose = require("mongoose");
 
 const carSchema = new mongoose.Schema({
     model:String,
@@ -6,6 +6,6 @@ const carSchema = new mongoose.Schema({
     make: String
 });
 
-const Car = mongooes.model('Car',carSchema);
+const Car = mongoose.model('Car',carSchema);
 
 module.exports = Car;

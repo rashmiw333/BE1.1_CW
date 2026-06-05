@@ -1,17 +1,17 @@
-const mongooes = require("mongoose");
+const mongoose = require("mongoose");
 
-const movieSchema = new mongooes.Schema({
+const movieSchema = new mongoose.Schema({
     title:{
         type: String,
         required: true
     },
-    releaeYear:{
+    releaseYear:{
         type: Number,
         required: true
     },
     genre:{
-        type: String,
-        enum:["Action","Drama","Comedy","Rhomance","Thriller","Fantacy","Sci-Fi","Horror",
+        type: [String],
+        enum:["Action","Drama","Comedy","Romance","Thriller","Fantasy","Sci-Fi","Horror",
             "Sports","Musical"],
     },
     director:{
@@ -19,7 +19,7 @@ const movieSchema = new mongooes.Schema({
         req:true
     },
     actors:{
-        type:String
+        type:[String]
     },
     language:{
         type: String,
@@ -49,9 +49,9 @@ const movieSchema = new mongooes.Schema({
         type:String
     },   
 },
-{timeStamps:true},
+{timestamps:true},
 );
 
-const Movie = mongooes.model("Movie",movieSchema);
+const Movie = mongoose.model("Movie",movieSchema);
 
 module.exports = Movie;
