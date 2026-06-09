@@ -1,63 +1,72 @@
 const {initializeDatabase} = require("./db/db.connect");
-const fs = require('fs');
  const Movie = require("./models/movie.models");
-const TwitterProfile = require("./models/twitterProfile.models");
-const { json } = require("stream/consumers");
+
 initializeDatabase();
- const jsonData = fs.readFileSync('movies.json',"utf-8");
-const jsonData1 = fs.readFileSync('profiles.json',"utf-8");
-const moviesData = JSON.parse(jsonData);
-const profilesData = JSON.parse(jsonData1);
 
-function seedData(){
-    try{
-        for(const profileData of moviesData){
-            const newMovie = new Movie({
-                title: moviesData.title,
-                releaseYear: moviesData.releaseYear,
-                genre: moviesData.genre,
-                director: moviesData.director,
-                actors: moviesData.actors,
-                language: moviesData.language,
-                country: moviesData.country,
-                rating: moviesData.rating,
-                plot: moviesData.plot,
-                awards: moviesData.awards,
-                posterUrl: moviesData.posterUrl,
-                trailerUrl: moviesData.trailerUrl,
+        const newMovie = {
+                title: "New Movie",
+                releaseYear: 2023,
+                genre: ["Drama"],
+                director: "Aditya Roy Chopra",
+                actors: ["Actor1","Actor2"],
+                language: "Hindi",
+                country: "India",
+                rating: 6.1,
+                plot: "A young Man and Young Woman fall in love on a trip",
+                awards: "IFA Filmfare Awards",
+                posterUrl: "https://example.com/new-poster1.jpg",
+                trailerUrl: "https://example.com/new-trailer1.mp4",
 
-            });
-           newMovie.save();
+        };
+
+        async function createMovie(newMovie){
+            try{
+                const movie = new Movie(newMovie);
+                const saveMovie = await movie.save();
+                console.log(saveMovie,"movie Data")
+            }catch(error){
+                throw error;
+            }
         }
+           
+ //createMovie(newMovie);
 
-    }catch(error){
-        console.log("Error seeding the Data",error);
-    }
-}
+ //find movie with titile
 
-function seedProfilesData(){
+ async function readMovieByTitle(movieTitle){
     try{
-        for(const profileData of profilesData){
-            const newProfile = new TwitterProfile({
-                fullName: profileData.fullName,
-                username: profileData.username,
-                bio: profileData.bio,
-                profilePicUrl: profileData.profilePicUrl,
-                followingCount: profileData.followingCount,
-                followerCount: profileData.followerCount,
-                companyName: profileData.companyName,
-                location: profileData.location,
-                portfolioUrl: profileData.portfolioUrl
-
-            });
-            newProfile.save();
-        // console.log(newProfile);
-        }
-
+        const movie = await Movie.find({title: movieTitle});
+        console.log(movie);
     }catch(error){
-        console.log("Error seeding the Data",error);
+        throw error;
     }
-}
 
-// seedData();
-seedProfilesData();
+ }
+//  readMovieByTitle("Lagaan")
+
+ //find all movies
+
+  async function readAllMovies(){
+    try{
+        const allMovies = await Movie.find();
+        console.log(allMovies);
+    }catch(error){
+        throw error;
+    }
+
+ }
+
+//  readAllMovies();
+
+ //get movie by director
+
+ async function readByDirector(directorName){
+    try{
+        const movieByDirector = await Movie.find({director: directorName});
+        console.log(movieByDirector);
+    }catch(error){
+        throw error;
+    }
+ }
+
+ readByDirector("Rajkumar Hirani");
